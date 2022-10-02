@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Classnames from 'classnames';
 import { PrizeoutOffer, PrizeoutOfferSettings } from '../../../../../slices/offers-slice';
 import { OfferGiftCard } from '../offer-gift-card/offer-gift-card';
@@ -8,18 +8,23 @@ import './vertical-offers.less';
 interface OfferView {
     offers: PrizeoutOffer[];
     viewSettings?: PrizeoutOfferSettings;
+    activeOfferId?: string;
+    setCheckoutOffer: (checkoutOffer: PrizeoutOffer) => void;
 }
 
-const VerticalOffers: React.FC<OfferView> = ({ offers, viewSettings }): React.ReactElement => {
+const VerticalOffers: React.FC<OfferView> = ({
+    offers,
+    viewSettings,
+    activeOfferId,
+    setCheckoutOffer,
+}): React.ReactElement => {
     const heading = viewSettings.title || 'Recommended';
     const subtitle = viewSettings.subtitle || null;
     const classes: string = Classnames('vertical-offers', { '--has-subtitle': subtitle });
 
-    const [activeOfferId, setActiveOfferId] = useState(null);
-
     const offerClickHandler = (offer: PrizeoutOffer) => {
-        const firstGiftCard = offer.giftcard_list[0];
-        setActiveOfferId(firstGiftCard.checkout_value_id);
+        const checkoutOffer = offer.giftcard_list[0].checkout_value_id === activeOfferId ? null : offer;
+        setCheckoutOffer(checkoutOffer);
     };
 
     const returnOffers = () => {

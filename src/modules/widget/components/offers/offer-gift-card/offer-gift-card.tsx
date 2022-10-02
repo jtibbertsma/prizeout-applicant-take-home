@@ -8,7 +8,7 @@ import './offer-gift-card.less';
 interface OfferGiftCardProps {
     offer: PrizeoutOffer;
     onClickHandler: () => void;
-    activeOfferId: string | null;
+    activeOfferId?: string;
 }
 
 export const OfferGiftCard: React.FC<OfferGiftCardProps> = ({
