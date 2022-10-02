@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Classnames from 'classnames';
 import { PrizeoutOffer, PrizeoutOfferSettings } from '../../../../../slices/offers-slice';
 import { OfferGiftCard } from '../offer-gift-card/offer-gift-card';
@@ -15,13 +15,19 @@ const VerticalOffers: React.FC<OfferView> = ({ offers, viewSettings }): React.Re
     const subtitle = viewSettings.subtitle || null;
     const classes: string = Classnames('vertical-offers', { '--has-subtitle': subtitle });
 
-    const offerClickHandler = (offer: PrizeoutOffer) => {};
+    const [activeOfferId, setActiveOfferId] = useState(null);
+
+    const offerClickHandler = (offer: PrizeoutOffer) => {
+        const firstGiftCard = offer.giftcard_list[0];
+        setActiveOfferId(firstGiftCard.checkout_value_id);
+    };
 
     const returnOffers = () => {
         return offers.map((offer) => (
             <OfferGiftCard
                 key={`${heading}-${offer.name}`}
                 offer={offer}
+                activeOfferId={activeOfferId}
                 onClickHandler={() => offerClickHandler(offer)}
             />
         ));

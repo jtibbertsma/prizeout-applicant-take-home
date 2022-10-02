@@ -8,11 +8,14 @@ import './offer-gift-card.less';
 interface OfferGiftCardProps {
     offer: PrizeoutOffer;
     onClickHandler: () => void;
+    activeOfferId: string | null;
 }
 
-export const OfferGiftCard: React.FC<OfferGiftCardProps> = ({ offer, onClickHandler }): React.ReactElement => {
-    let activeOfferId;
-
+export const OfferGiftCard: React.FC<OfferGiftCardProps> = ({
+    offer,
+    onClickHandler,
+    activeOfferId,
+}): React.ReactElement => {
     const firstGiftCard = offer.giftcard_list[0];
     const offerType = firstGiftCard.display_monetary_bonus ? 'monetary' : 'percentage';
     const offerValue = firstGiftCard.display_bonus;
